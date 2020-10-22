@@ -1,3 +1,4 @@
+import {ProfileCard} from "./components/ProfileCard";
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -93,26 +94,8 @@ const App: () => React$Node = () => {
         alignItems: "stretch",
         
       }}>
-      <View style = {{flex: 1, display: "flex", flexDirection: "row",}}>
-        <View style = {{display: "flex", flex: 1,  justifyContent: "center"}}>
-          <Image
-            style = {{width: 100, height: 100, borderRadius: 50, alignSelf: "center"}}
-            source = {require("./images/spitz.png")
-            }>
-          </Image>
-        </View>
-        <View style = {{padding: 10, flex: 2, justifyContent: "center"}}>
-          <Text style = {{fontSize: 20, fontWeight: "bold"}}>
-            김현철
-          </Text>
-          <Text>
-            상병
-          </Text>
-
-        </View>
-
-      </View>
-      <View style = {{flex: 1, alignItems: "center",}}>
+      <ProfileCard></ProfileCard>
+      <View style = {{flex: 1.5, paddingBottom: 30, alignItems: "center", justifyContent: "center"}}>
 
         <Text style = {{fontSize: 15, fontWeight: "bold"}}>
           D - {leftDays}
