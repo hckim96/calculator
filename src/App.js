@@ -1,4 +1,5 @@
 import {ProfileCard} from "./components/ProfileCard";
+import RegistrationView from "./view/RegistrationView.js"
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -26,6 +27,7 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import MyDatePicker from "./components/MyDatePicker";
 
 const DayList = ({items}) => {
   return (
@@ -84,50 +86,50 @@ const App: () => React$Node = () => {
     
   ];
   return (
-    <View
-      style={{
-        padding: 30,
-        display: "flex",
-        flexDirection: "column",
-        flex: 1,
-        justifyContent: "space-between",
-        alignItems: "stretch",
+    // <View
+    //   style={{
+    //     padding: 30,
+    //     display: "flex",
+    //     flexDirection: "column",
+    //     flex: 1,
+    //     justifyContent: "space-between",
+    //     alignItems: "stretch",
         
-      }}>
-      <ProfileCard></ProfileCard>
-      <View style = {{flex: 1.5, paddingBottom: 30, alignItems: "center", justifyContent: "center"}}>
+    //   }}>
+    //   <ProfileCard></ProfileCard>
+    //   <View style = {{flex: 1.5, paddingBottom: 30, alignItems: "center", justifyContent: "center"}}>
 
-        <Text style = {{fontSize: 15, fontWeight: "bold"}}>
-          D - {leftDays}
-        </Text>
-        <Text style = {{fontSize: 55, fontWeight: "bold"}}>
-          {`${parseInt((money + additionalMoney)/1000)},${parseInt(money + additionalMoney)%1000}`}
-        </Text>
-        </View>
-      <View style = {{marginBottom: 30}}>
-        <FlatList
-          data = {dday}
-          keyExtractor = {(item) => item.dayName }
-          renderItem = {({item}) => {
-            return (
-              <View style = {{display: "flex", flexDirection: "row", marginBottom: 5, borderBottomWidth: 1, borderBottomColor: "gray"}}>
-                <Text
-                    style = {{flex: 1, color: "black", fontWeight: "bold", fontSize: 20}}>
-                    {item.dayName}
-                </Text>
-                <Text
-                  style = {{flex: 1, textAlign: "right", fontWeight: "bold", fontSize: 20}}>
-                  {item.dayNumber}
-                </Text>
-              </View>
-            )
-          }}
-        />
+    //     <Text style = {{fontSize: 15, fontWeight: "bold"}}>
+    //       D - {leftDays}
+    //     </Text>
+    //     <Text style = {{fontSize: 55, fontWeight: "bold"}}>
+    //       {`${parseInt((money + additionalMoney)/1000)},${parseInt(money + additionalMoney)%1000}`}
+    //     </Text>
+    //   </View>
+    //   <View style = {{marginBottom: 30}}>
+    //     <FlatList
+    //       data = {dday}
+    //       keyExtractor = {(item) => item.dayName }
+    //       renderItem = {({item}) => {
+    //         return (
+    //           <View style = {{display: "flex", flexDirection: "row", marginBottom: 5, borderBottomWidth: 1, borderBottomColor: "gray"}}>
+    //             <Text
+    //                 style = {{flex: 1, color: "black", fontWeight: "bold", fontSize: 20}}>
+    //                 {item.dayName}
+    //             </Text>
+    //             <Text
+    //               style = {{flex: 1, textAlign: "right", fontWeight: "bold", fontSize: 20}}>
+    //               {item.dayNumber}
+    //             </Text>
+    //           </View>
+    //         )
+    //       }}
+    //     />
 
-      </View>
+    //   </View>
 
-      </View>
-
+    // </View>
+    <RegistrationView></RegistrationView>
 
   );
 };
