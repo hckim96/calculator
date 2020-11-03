@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 // import Dropdown from "../components/Dropdown";
 import {Picker} from "@react-native-community/picker"
-export default class RegistrationView extends React.Component {
+export default class RegistrationScreen extends React.Component {
   state = {
     username: '',
     password: '',
@@ -75,7 +75,7 @@ export default class RegistrationView extends React.Component {
           onChangeText={val => this.onChangeText('phone_number', val)}
         />
         <Button
-          title='Register'
+          title='등록하기'
           onPress={this.register}
         />
         
