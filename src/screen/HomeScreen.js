@@ -3,18 +3,21 @@ import {View, Text, Button, FlatList} from 'react-native';
 import {HomeHeader} from '../components/HomeHeader.js';
 import {ProfileCard} from '../components/ProfileCard.js';
 let NumOfDays = 30;
-// 0 ~ 2 : 408100 , 3 ~ 8 : 441700, 9 ~ 14 : 488200, 15 ~ : 540900
+// 0 ~ 2 : 408100 , 3 ~ 8 : 441700, 9 ~ 14 : 488200, 15 ~ : 540900  2, 6, 6, 나머지 개월
 let money = 441700;
 
 let additionalPerDays = 8500;
 let additionalMoney = additionalPerDays * (20 + 10.0 / 7);
 
-let dischargeDay = new Date('November 3, 2021 15:00:00');
 let now = new Date();
+let dischargeDay = new Date('November 3, 2021 15:00:00');
 let beginDay = new Date('January 29, 2020 15:00:00');
+
 const leftDays = parseInt((dischargeDay - now) / (1000 * 60 * 60 * 24));
 const passedDays = Math.ceil((now - beginDay) / (1000 * 60 * 60 * 24));
 const total = parseInt((dischargeDay - beginDay) / (1000 * 60 * 60 * 24));
+
+
 const dday = [
   {
     dayName: '전체 복무일',
@@ -35,6 +38,36 @@ const dday = [
 ];
 
 export const HomeScreen = ({navigation}) => {
+  const BASE_PAY = [408100, 441700, 488200, 540900];
+  let transportationExpenses = 2800;
+  let foodExpenses = 6000;
+  let dischargeDay = new Date('November 3, 2021 15:00:00');
+  let beginDay = new Date('January 29, 2020 15:00:00');
+  
+  function getClass() {
+    let now = Date.now();
+    let nowMonth;
+    if (now.getFullYear() == beginDay.getFullYear()) {
+      nowMonth = now.getMonth();
+    } else {
+      nowMonth = now.getMonth() + 12;
+    }
+
+    let difference = beginDay.getMonth() - nowMonth;
+    if (difference < 2) {
+      return 0;
+    } else if (difference < 8) {
+      return 1;
+    } else if (difference < 14) {
+      return 2;
+    } else {
+      return 3;
+    }
+
+  }
+  function getTotalPay() {
+    let now = Date.now();
+  }
   return (
     <View style={{flexDirection: 'column', flex: 1}}>
       <HomeHeader navigation={navigation}></HomeHeader>
