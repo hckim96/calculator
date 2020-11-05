@@ -45,15 +45,14 @@ export const HomeScreen = ({navigation}) => {
   let beginDay = new Date('January 29, 2020 15:00:00');
   
   function getClass() {
-    let now = Date.now();
+    let now = new Date();
     let nowMonth;
-    if (now.getFullYear() == beginDay.getFullYear()) {
+    if (now.getFullYear() === beginDay.getFullYear()) {
       nowMonth = now.getMonth();
     } else {
       nowMonth = now.getMonth() + 12;
     }
-
-    let difference = beginDay.getMonth() - nowMonth;
+    let difference = nowMonth - beginDay.getMonth();
     if (difference < 2) {
       return 0;
     } else if (difference < 8) {
@@ -63,10 +62,9 @@ export const HomeScreen = ({navigation}) => {
     } else {
       return 3;
     }
-
   }
   function getTotalPay() {
-    let now = Date.now();
+    let now = new Date();
   }
   return (
     <View style={{flexDirection: 'column', flex: 1}}>
