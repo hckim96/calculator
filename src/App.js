@@ -53,13 +53,12 @@ const App: () => React$Node = () => {
         <Stack.Screen
           name="Home" // for navigation method
           component={HomeScreen}
-          options={{ title: "Home" }} // for view
+          options={{ title: "Home", headerShown: false }} // for view
         />
-        <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: 'Profile' }} />
-        <Stack.Screen name="Registration" component={RegistrationScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: 'Profile', headerShown: false }} />
+        <Stack.Screen name="Registration" component={RegistrationScreen} options = {{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
-
     );
 };
 

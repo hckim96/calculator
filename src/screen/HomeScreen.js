@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {View, Text, Button, FlatList} from 'react-native';
 import {HomeHeader} from '../components/HomeHeader.js';
 import {ProfileCard} from '../components/ProfileCard.js';
@@ -38,13 +38,32 @@ const dday = [
 ];
 
 export const HomeScreen = ({navigation}) => {
+  const [difference, setDifference] = useState();
   const BASE_PAY = [408100, 441700, 488200, 540900];
   let transportationExpenses = 2800;
   let foodExpenses = 6000;
   let dischargeDay = new Date('November 3, 2021 15:00:00');
   let beginDay = new Date('January 29, 2020 15:00:00');
-  
-  function getClass() {
+  let militaryClass = getMilitaryClass();
+  // let workingDays = getWorkingDay();
+  let now = new Date();
+  function getWorkingDay(monthIndex) {
+    let total =  new Date(2020, monthIndex + 1, 1) - new Date(2020, monthIndex, 1);
+    total = total / (1000 * 60 * 60 * 24);
+
+    let day = new Date(2020, monthIndex, 1); // 0 for sunday 6 for saturday
+
+    let ret = parseInt((total / 7)) * 5;
+    
+    for (let i = 1; i < total % 7; i++) {
+      if ((day + i) % 7 != 0 &&  (day + i) % 7 != 6) {
+        ret++;
+      }
+    }
+    return ret;
+  }
+
+  function getMilitaryClass() {
     let now = new Date();
     let nowMonth;
     if (now.getFullYear() === beginDay.getFullYear()) {
@@ -63,26 +82,40 @@ export const HomeScreen = ({navigation}) => {
       return 3;
     }
   }
+
   function getTotalPay() {
-    let now = new Date();
+
+    // should check military class 
+    // to get month parameter
+    
+    let workingDays = getWorkingDay(now.getMonth());
+    let totalPay = BASE_PAY[militaryClass] + workingDays * (foodExpenses + transportationExpenses);
+    return `${parseInt(totalPay / 1000)},${
+      parseInt(totalPay) % 1000 == 0 ? "000" : parseInt(totalPay) % 1000
+    }`
+    
   }
   return (
     <View style={{flexDirection: 'column', flex: 1}}>
       <HomeHeader navigation={navigation}></HomeHeader>
+
       <View
         style={{
-          padding: 30,
+          paddingHorizontal: 30,
+          paddingVertical: 40,
           display: 'flex',
           flexDirection: 'column',
           flex: 1,
           justifyContent: 'space-between',
           alignItems: 'stretch',
         }}>
-        <ProfileCard></ProfileCard>
+
+        <ProfileCard name = "ㅁㄴㅇ" militaryClass = {militaryClass}></ProfileCard>
+
         <View
           style={{
-            flex: 1.5,
-            paddingBottom: 30,
+            flex: 1,
+            // backgroundColor: "gray",
             alignItems: 'center',
             justifyContent: 'center',
           }}>
@@ -92,8 +125,14 @@ export const HomeScreen = ({navigation}) => {
               parseInt(money + additionalMoney) % 1000
             }`}
           </Text>
+          <Text>
+            {getTotalPay()}
+          </Text>
+          <Text>
+            {getWorkingDay(now.getMonth())}
+          </Text>
         </View>
-        <View style={{marginBottom: 30}}>
+        <View style={{bottom: 0}}>
           <FlatList
             data={dday}
             keyExtractor={(item) => item.dayName}
