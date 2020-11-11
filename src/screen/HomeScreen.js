@@ -2,11 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import {View, Text, Button, FlatList} from 'react-native';
 import {HomeHeader} from '../components/HomeHeader.js';
 import {ProfileCard} from '../components/ProfileCard.js';
+import {MyPercentBar} from '../components/MyPercentBar.js';
+import * as Progress from 'react-native-progress';
+
 // 0 ~ 2 : 408100 , 3 ~ 8 : 441700, 9 ~ 14 : 488200, 15 ~ : 540900  2, 6, 6, 나머지 개월
 
 export const HomeScreen = ({navigation}) => {
   const BASE_PAY = [408100, 441700, 488200, 540900];
-  let now = new Date();
+  const [now, setNow] = useState(new Date());
   let transportationExpenses = 2800;
   let foodExpenses = 6000;
   let beginDay = new Date('January 30, 2020');
@@ -18,31 +21,7 @@ export const HomeScreen = ({navigation}) => {
   const passedDays = Math.ceil((now - beginDay) / (1000 * 60 * 60 * 24));
   const total = parseInt((dischargeDay - beginDay) / (1000 * 60 * 60 * 24));
 
-  const [passed_pct, setPassed_pct] = useState(((new Date() - beginDay) / (dischargeDay - beginDay)) * 100);
-  // function useInterval(callback, delay) {
-  //   const savedCallback = useRef();
-  
-  //   // Remember the latest callback.
-  //   useEffect(() => {
-  //     savedCallback.current = callback;
-  //   }, [callback]);
-  
-  //   // Set up the interval.
-  //   useEffect(() => {
-  //     function tick() {
-  //       savedCallback.current();
-  //     }
-  //     if (delay !== null) {
-  //       let id = setInterval(tick, delay);
-  //       return () => clearInterval(id);
-  //     }
-  //   }, [delay]);
-  // }
-
-  // useInterval(() => {
-  //   // now = new Date();
-  //   setPassed_pct(((new Date() - beginDay) / (dischargeDay - beginDay)) * 100);
-  // }, 1000 / 30);
+  const [passed_pct, setPassed_pct] = useState(((now - beginDay) / (dischargeDay - beginDay)) * 100);
   const dday = [
     {
       dayName: '전체 복무일',
@@ -61,6 +40,14 @@ export const HomeScreen = ({navigation}) => {
     //   dayNumber: 162,
     // },
   ];
+
+  useEffect(() => {
+    let id = setInterval(() => {
+      setNow(new Date());
+    }, 20);
+
+    return () => clearInterval(id)
+  }, [])
   function getWorkingDay(monthIndex) {
     let total =  new Date(2020, monthIndex + 1, 1) - new Date(2020, monthIndex, 1);
     total = total / (1000 * 60 * 60 * 24);
@@ -102,7 +89,6 @@ export const HomeScreen = ({navigation}) => {
     let militaryClass = getMilitaryClass();
     let workingDays = getWorkingDay(now.getMonth());
     let totalPay = BASE_PAY[militaryClass] + workingDays * (foodExpenses + transportationExpenses);
-
     return (
       <View >
         <Text style = {{textAlign: "center", fontSize: 20, fontWeight: 'bold'}}>
@@ -116,6 +102,7 @@ export const HomeScreen = ({navigation}) => {
   }
 
   return (
+    
     <View style={{flexDirection: 'column', flex: 1}}>
       <HomeHeader navigation={navigation}></HomeHeader>
       <View
@@ -128,9 +115,7 @@ export const HomeScreen = ({navigation}) => {
           justifyContent: 'space-between',
           alignItems: 'stretch',
         }}>
-
         <ProfileCard name = "ㅁㄴㅇ" militaryClass = {militaryClass}></ProfileCard>
-
         <View
           style={{
             flex: 1,
@@ -138,11 +123,13 @@ export const HomeScreen = ({navigation}) => {
             justifyContent: 'center',
             
           }}>
+          <MyPercentBar date = {now} dischargeDay = {dischargeDay} beginDay = {beginDay}/>
+          <Text style = {{fontSize: 35, fontWeight: 'bold'}}>
+            {now.toString()}
+          </Text>
+          
           <Text style={{fontSize: 55, fontWeight: 'bold'}}>
             {getTotalPay()}
-          </Text>
-          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
-            {`${passed_pct.toPrecision(10)}%`}
           </Text>
         </View>
         <View style={{bottom: 0}}>
