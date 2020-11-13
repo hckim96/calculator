@@ -7,7 +7,7 @@ export const MyPercentBar = ({date, beginDay, dischargeDay}) => {
         return ((((date - beginDay) / (dischargeDay - beginDay))))
     }
     return (
-        <View>
+        <View style = {{borderColor: "gray", borderWidth: 4}}>
             <Progress.Bar progress={calculatePercent()} 
                         width={340}
                         color = "black" 
